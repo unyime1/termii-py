@@ -1,0 +1,27 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "termii-py"
+version = "0.0.1"
+authors = [
+  { name="Unyime Etim", email="lordunyime@gmail.com" },
+]
+description = "A beginner friendly SDK for Termii."
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+dependencies = [
+  "requests>=2.28.0",
+  "pydantic>=2.1.0"
+]
+
+[project.urls]
+"Homepage" = "https://github.com/unyime1/termii-py"
+"Bug Tracker" = "https://github.com/unyime1/termii-py/issues"
