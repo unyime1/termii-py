@@ -6,3 +6,6 @@ lint:
 
 test:
 	pytest -v -s
+
+build:
+	python3 -m build
