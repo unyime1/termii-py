@@ -5,4 +5,4 @@ lint:
 	flake8 .
 
 test:
-	pytest
+	pytest -v -s
