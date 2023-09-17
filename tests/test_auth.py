@@ -32,10 +32,10 @@ class TestClient:
         termii_client = Client()
         with pytest.raises(ValueError) as value_error:
             termii_client.authenticate_from_env()
-            assert (
-                str(value_error.value)
-                == "TERMII_ENDPOINT_URL is not present in the environment."
-            )
+        assert (
+            str(value_error.value)
+            == "TERMII_ENDPOINT_URL is not present in the environment."
+        )
 
     def test_authenticate_behaviour_if_no_sender_id(self, test_environments):
         """
@@ -47,10 +47,10 @@ class TestClient:
         termii_client = Client()
         with pytest.raises(ValueError) as value_error:
             termii_client.authenticate_from_env()
-            assert (
-                str(value_error.value)
-                == "TERMII_SENDER_ID is not present in the environment."
-            )
+        assert (
+            str(value_error.value)
+            == "TERMII_SENDER_ID is not present in the environment."
+        )
 
     def test_authenticate_client_by_env(self, test_environments):
         """Test that env authentication works."""
