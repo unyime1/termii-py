@@ -11,5 +11,5 @@ class RequestType(str, Enum):
 
 class RequestData(BaseModel):
     url: str
-    payload: Optional[Dict]
+    payload: Optional[Dict] = None
     type: RequestType

@@ -16,9 +16,9 @@ class Messaging(Client):
         Ensure that API keys are provided.
         """
         if (
-            not self.TERMII_API_KEY
-            or not self.TERMII_ENDPOINT_URL
-            or not self.TERMII_SENDER_ID
+            not hasattr(self, "TERMII_API_KEY")
+            or not hasattr(self, "TERMII_ENDPOINT_URL")
+            or not hasattr(self, "TERMII_SENDER_ID")
         ):
             raise ValueError("Authentication required.")
 
