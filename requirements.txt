@@ -3,7 +3,6 @@
 
 # Core lib
 requests>=2.28.0
-pydantic>=2.1.0
 
 
 # Build
@@ -11,7 +10,9 @@ build
 twine
 
 # Tests
-black==23.7.0
 coverage==7.3.0
 pytest==7.4.0
+
+# Code formatting
+black==23.7.0
 flake8==6.1.0

@@ -93,10 +93,10 @@ class Messaging(Client):
     def send_message(
         self,
         receivers: List[str],
-        channel: MessagingChannel,
         text: str,
-        media_url: Optional[str],
-        media_caption: Optional[str],
+        media_url: Optional[str] = None,
+        media_caption: Optional[str] = None,
+        channel: Optional[MessagingChannel] = MessagingChannel.generic,
         distribution_type: Optional[
             MessageDistributionType
         ] = MessageDistributionType.simple,
@@ -124,26 +124,26 @@ class Messaging(Client):
             `media_caption` (Optional[str]): The caption that should be added to the media.
 
         Returns:
-            Dict.
-        """
+            Dict
+        """  # noqa
 
         # Data validation.
         self.validate_authentication()
         if media_url:
             if channel != MessagingChannel.whatsapp:
                 raise ValueError(
-                    f"Media messages are only allowed with {MessagingChannel.whatsapp.value} channel."
+                    f"Media messages are only allowed with {MessagingChannel.whatsapp.value} channel."  # noqa
                 )
 
         if distribution_type.value == MessageDistributionType.simple:
             if len(receivers) >= 100:
                 raise ValueError(
-                    f"You cannot send to more than 100 mobile numbers."
+                    "You cannot send to more than 100 mobile numbers."
                 )
         else:
             if len(receivers) >= 10000:
                 raise ValueError(
-                    f"You cannot send to more than 10000 mobile numbers."
+                    "You cannot send to more than 10000 mobile numbers."
                 )
 
         # Prepare payload.
