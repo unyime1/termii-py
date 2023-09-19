@@ -4,12 +4,14 @@ from termii.auth import Client
 from termii.messaging.schemas import (
     RequestData,
     RequestType,
-    MessagingChannel
+    MessagingChannel,
+    MessageDistributionType,
 )
 from termii.messaging.endpoints import (
     FETCH_SENDER_ID,
     REQUEST_SENDER_ID,
-    SEND_MESSAGE
+    SEND_MESSAGE,
+    SEND_BULK_MESSAGE,
 )
 from termii.utils import make_request
 
@@ -18,6 +20,7 @@ class Messaging(Client):
     """
     Base class for core messaging APIs.
     """
+
     def fetch_sender_id(self, page: Optional[int] = 1) -> Dict:
         """
         `Documentation`: https://developers.termii.com/sender-id
@@ -70,7 +73,7 @@ class Messaging(Client):
 
             `endpoint_url` (str): Endpoint url from dashboard.
             E.g https://api.ng.termii.com
-        
+
         Returns:
             Dict.
         """
@@ -94,6 +97,9 @@ class Messaging(Client):
         text: str,
         media_url: Optional[str],
         media_caption: Optional[str],
+        distribution_type: Optional[
+            MessageDistributionType
+        ] = MessageDistributionType.simple,
     ) -> Dict:
         """
         `Documentation`: https://developers.termii.com/messaging-api
@@ -116,19 +122,29 @@ class Messaging(Client):
             formats are supported: JPG, JPEG, PNG, MP3, OGG, AMR, PDF, MP4
 
             `media_caption` (Optional[str]): The caption that should be added to the media.
-        
+
         Returns:
             Dict.
         """
-        self.validate_authentication()
 
-        # Validate properties.
+        # Data validation.
+        self.validate_authentication()
         if media_url:
             if channel != MessagingChannel.whatsapp:
-                raise ValueError(f"This argument is only allowed with {MessagingChannel.whatsapp.value} channel.")
-        
-        if len(receivers) >= 100:
-            raise ValueError(f"You cannot send to more than 100 mobile numbers.")
+                raise ValueError(
+                    f"Media messages are only allowed with {MessagingChannel.whatsapp.value} channel."
+                )
+
+        if distribution_type.value == MessageDistributionType.simple:
+            if len(receivers) >= 100:
+                raise ValueError(
+                    f"You cannot send to more than 100 mobile numbers."
+                )
+        else:
+            if len(receivers) >= 10000:
+                raise ValueError(
+                    f"You cannot send to more than 10000 mobile numbers."
+                )
 
         # Prepare payload.
         payload = {}
@@ -140,14 +156,21 @@ class Messaging(Client):
         payload["sms"] = text
 
         if media_url:
-            payload["media"] = dict(
-                media_url=media_url,
-                caption=media_caption
-            )
+            payload["media"] = dict(media_url=media_url, caption=media_caption)
 
         # Make request.
+        request_url = ""
+        if distribution_type.value == MessageDistributionType.simple:
+            request_url = SEND_MESSAGE.format(
+                TERMII_ENDPOINT_URL=self.TERMII_ENDPOINT_URL
+            )
+        else:
+            request_url = SEND_BULK_MESSAGE.format(
+                TERMII_ENDPOINT_URL=self.TERMII_ENDPOINT_URL
+            )
+
         request_data = RequestData(
-            url=SEND_MESSAGE.format(TERMII_ENDPOINT_URL=self.TERMII_ENDPOINT_URL),
+            url=request_url,
             payload=payload,
             type=RequestType.post,
         )
