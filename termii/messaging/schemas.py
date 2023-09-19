@@ -13,3 +13,14 @@ class RequestData(BaseModel):
     url: str
     payload: Optional[Dict] = None
     type: RequestType
+
+
+class MessagingChannel(str, Enum):
+    generic = "generic"
+    dnd = "dnd"
+    whatsapp = "whatsapp"
+
+
+class MessageDistributionType(str, Enum):
+    simple = "simple"
+    bulk = "bulk"

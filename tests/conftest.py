@@ -6,6 +6,7 @@ from tests.test_data.sender_id import (
     fetch_payload as fetch_sender_id_payload,
     request_payload as request_sender_id_payload,
 )
+from tests.test_data.messaging import data as messaging_response
 from termii.utils import requests
 
 
@@ -51,5 +52,21 @@ def mock_request_sender_id(monkeypatch):
 
     def mock_post(*args, **kwargs):
         return MockRequestSenderIDResponse()
+
+    monkeypatch.setattr(requests, "post", mock_post)
+
+
+class MockMessageResponse:
+    status_code = 200
+
+    @staticmethod
+    def json():
+        return messaging_response
+
+
+@pytest.fixture()
+def mock_send_messaging(monkeypatch):
+    def mock_post(*args, **kwargs):
+        return MockMessageResponse()
 
     monkeypatch.setattr(requests, "post", mock_post)
