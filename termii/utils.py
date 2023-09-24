@@ -4,7 +4,7 @@ import string
 
 import requests
 
-from termii.messaging.schemas import RequestData, RequestType
+from termii.schemas.shared import RequestData, RequestType
 
 
 def make_request(data: RequestData) -> Dict:

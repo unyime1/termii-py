@@ -2,9 +2,9 @@ import os
 
 import pytest
 
-from termii.messaging.core import Messaging
+from termii.messaging import Messaging
 from tests.test_data.sender_id import fetch_payload as fetch_sender_id_payload
-from termii.messaging.schemas import (
+from termii.schemas.messaging import (
     MessagingChannel,
     MessageDistributionType,
 )
