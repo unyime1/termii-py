@@ -7,6 +7,8 @@ from pydantic import BaseModel
 class RequestType(str, Enum):
     post = "post"
     get = "get"
+    patch = "patch"
+    delete = "delete"
 
 
 class RequestData(BaseModel):

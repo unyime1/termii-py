@@ -115,7 +115,23 @@ class MockUpdatePhonebookResponse:
 
 @pytest.fixture()
 def mock_update_phonebook(monkeypatch):
-    def mock_post(*args, **kwargs):
+    def mock_patch(*args, **kwargs):
         return MockUpdatePhonebookResponse()
 
-    monkeypatch.setattr(requests, "post", mock_post)
+    monkeypatch.setattr(requests, "patch", mock_patch)
+
+
+class MockDeletePhonebookResponse:
+    status_code = 200
+
+    @staticmethod
+    def json():
+        return {"message": "Phonebook deleted successfully"}
+
+
+@pytest.fixture()
+def mock_delete_phonebook(monkeypatch):
+    def mock_delete(*args, **kwargs):
+        return MockDeletePhonebookResponse()
+
+    monkeypatch.setattr(requests, "delete", mock_delete)

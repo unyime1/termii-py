@@ -11,6 +11,7 @@ from termii.endpoints.campaign import (
     FETCH_PHONEBOOKS,
     CREATE_PHONEBOOK,
     UPDATE_PHONEBOOK,
+    DELETE_PHONEBOOK,
 )
 
 
@@ -46,7 +47,7 @@ class Campaign(Client):
             `name` (str): The name of the phonebook.
 
             `description` (str): A description of the contacts stored in the phonebook.
-        """
+        """  # noqa
         self.validate_authentication()
         payload = dict(
             api_key=self.TERMII_API_KEY,
@@ -74,7 +75,7 @@ class Campaign(Client):
             `description` (str): A description of the contacts stored in the phonebook.
 
             `phonebook_id` (str): ID of phonebook to update.
-        """
+        """  # noqa
         self.validate_authentication()
         payload = dict(
             api_key=self.TERMII_API_KEY,
@@ -87,6 +88,25 @@ class Campaign(Client):
                 phonebook_id=phonebook_id,
             ),
             payload=payload,
-            type=RequestType.post,
+            type=RequestType.patch,
+        )
+        return make_request(data=request_data)
+
+    def delete_phonebook(self, phonebook_id: str) -> Dict:
+        """
+        Delete a phonebook.
+
+        Args:
+
+            `phonebook_id` (str): ID of phonebook to update.
+        """
+        self.validate_authentication()
+        request_data = RequestData(
+            url=DELETE_PHONEBOOK.format(
+                TERMII_ENDPOINT_URL=self.TERMII_ENDPOINT_URL,
+                phonebook_id=phonebook_id,
+                TERMII_API_KEY=self.TERMII_API_KEY,
+            ),
+            type=RequestType.delete,
         )
         return make_request(data=request_data)
