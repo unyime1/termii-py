@@ -7,6 +7,7 @@ from tests.test_data.sender_id import (
     request_payload as request_sender_id_payload,
 )
 from tests.test_data.messaging import data as messaging_response
+from tests.test_data.campaign import get_phonebook
 from termii.utils import requests
 
 
@@ -70,3 +71,19 @@ def mock_send_messaging(monkeypatch):
         return MockMessageResponse()
 
     monkeypatch.setattr(requests, "post", mock_post)
+
+
+class MockGetPhonebookResponse:
+    status_code = 200
+
+    @staticmethod
+    def json():
+        return get_phonebook
+
+
+@pytest.fixture()
+def mock_get_phonebook(monkeypatch):
+    def mock_get(*args, **kwargs):
+        return MockGetPhonebookResponse()
+
+    monkeypatch.setattr(requests, "get", mock_get)
