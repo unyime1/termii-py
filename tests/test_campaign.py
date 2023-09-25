@@ -1,3 +1,5 @@
+import uuid
+
 from termii.campaign import Campaign
 from tests.test_data.campaign import get_phonebook
 
@@ -9,7 +11,6 @@ class TestPhonebook:
         campaign_client.authenticate_from_env()
         phonebooks = campaign_client.get_phonebooks()
 
-        print(phonebooks)
         assert len(phonebooks.get("data")) == len(get_phonebook.get("data"))
         assert (
             phonebooks.get("data")[0]["id"]
@@ -32,3 +33,14 @@ class TestPhonebook:
             name="Test phonebook", description="Test description."
         )
         phonebooks.get("message") == "Phonebook added successfully"
+
+    def test_update_phonebook(self, test_environments, mock_update_phonebook):
+        """Test Update phonebook."""
+        campaign_client = Campaign()
+        campaign_client.authenticate_from_env()
+        phonebooks = campaign_client.update_phonebook(
+            name="Test phonebook",
+            description="Test description.",
+            phonebook_id=str(uuid.uuid4()),
+        )
+        phonebooks.get("message") == "Phonebook updated successfully"

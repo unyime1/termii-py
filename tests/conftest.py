@@ -103,3 +103,19 @@ def mock_create_phonebook(monkeypatch):
         return MockCreatePhonebookResponse()
 
     monkeypatch.setattr(requests, "post", mock_post)
+
+
+class MockUpdatePhonebookResponse:
+    status_code = 200
+
+    @staticmethod
+    def json():
+        return {"message": "Phonebook updated successfully"}
+
+
+@pytest.fixture()
+def mock_update_phonebook(monkeypatch):
+    def mock_post(*args, **kwargs):
+        return MockUpdatePhonebookResponse()
+
+    monkeypatch.setattr(requests, "post", mock_post)
