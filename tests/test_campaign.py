@@ -2,7 +2,7 @@ from termii.campaign import Campaign
 from tests.test_data.campaign import get_phonebook
 
 
-class TestSenderID:
+class TestPhonebook:
     def test_get_phonebooks(self, test_environments, mock_get_phonebook):
         """Test fetch of phonebooks"""
         campaign_client = Campaign()
@@ -23,3 +23,12 @@ class TestSenderID:
             phonebooks.get("data")[0]["last_updated"]
             == get_phonebook.get("data")[0]["last_updated"]
         )
+
+    def test_create_phonebook(self, test_environments, mock_create_phonebook):
+        """Create phonebook."""
+        campaign_client = Campaign()
+        campaign_client.authenticate_from_env()
+        phonebooks = campaign_client.create_phonebook(
+            name="Test phonebook", description="Test description."
+        )
+        phonebooks.get("message") == "Phonebook added successfully"

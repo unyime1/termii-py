@@ -7,7 +7,7 @@ from termii.schemas.shared import (
     RequestType,
 )
 from termii.utils import make_request
-from termii.endpoints.campaign import FETCH_PHONEBOOKS
+from termii.endpoints.campaign import FETCH_PHONEBOOKS, CREATE_PHONEBOOK
 
 
 class Campaign(Client):
@@ -33,3 +33,27 @@ class Campaign(Client):
             type=RequestType.get,
         )
         return make_request(data=data)
+
+    def create_phonebook(self, name: str, description: str) -> Dict:
+        """
+        Create a phonebook.
+
+        Args:
+            `name` (str): The name of the phonebook.
+
+            `description` (str): A description of the contacts stored in the phonebook.
+        """
+        self.validate_authentication()
+        payload = dict(
+            api_key=self.TERMII_API_KEY,
+            phonebook_name=name,
+            description=description,
+        )
+        request_data = RequestData(
+            url=CREATE_PHONEBOOK.format(
+                TERMII_ENDPOINT_URL=self.TERMII_ENDPOINT_URL,
+            ),
+            payload=payload,
+            type=RequestType.post,
+        )
+        return make_request(data=request_data)
