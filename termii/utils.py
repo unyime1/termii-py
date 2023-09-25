@@ -4,7 +4,7 @@ import string
 
 import requests
 
-from termii.messaging.schemas import RequestData, RequestType
+from termii.schemas.shared import RequestData, RequestType
 
 
 def make_request(data: RequestData) -> Dict:
@@ -18,6 +18,16 @@ def make_request(data: RequestData) -> Dict:
 
         case RequestType.get:
             response = requests.get(url=data.url)
+            return response.json()
+
+        case RequestType.patch:
+            response = requests.patch(
+                url=data.url, json=data.payload if data.payload else {}
+            )
+            return response.json()
+
+        case RequestType.delete:
+            response = requests.delete(url=data.url)
             return response.json()
 
 
