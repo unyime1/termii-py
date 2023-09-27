@@ -1,5 +1,6 @@
 from typing import Dict, Optional
 
+import requests
 from pydantic import EmailStr
 
 from termii.auth import Client
@@ -89,3 +90,47 @@ class Contacts(Client):
             payload=cleaned_payload,
         )
         return make_request(data=data)
+
+    def validate_contact_file(self, file_path: str) -> None:
+        """Validate that file has an accepted extention."""
+        allowed_extensions = ["txt", "xlsx", "csv"]
+        if file_path.split(".")[-1] not in allowed_extensions:
+            raise ValueError("This file type is not supported.")
+
+    def add_multiple_contacts(
+        self, filename: str, country_code: str, phonebook_id: str
+    ) -> Dict:
+        """
+        Add multiple contacts to phonebook
+        Docs: https://developers.termii.com/contacts#add-multiple-contacts-to-phonebook
+
+        Args:
+            `phonebook_id` (str): ID of phonebook.
+
+            `phone_number` (str): Phone number of the contact.
+
+            `country_code` (str): Represents short numeric
+                geographical codes developed to represent countries (Example: 234 ).
+
+            `file_path` (str): File containing the list of contacts you want to
+                add to your phonebook. Supported files include : 'txt', 'xlsx', and 'csv'.
+        """
+
+        self.validate_authentication()
+        self.validate_contact_file(filename)
+
+        payload = {
+            "country_code": country_code,
+            "api_key": self.TERMII_API_KEY,
+        }
+        files = [("contact_file", (f"{filename}", "rb"), "text/csv")]
+
+        response = requests.post(
+            ADD_CONTACT.format(
+                TERMII_ENDPOINT_URL=self.TERMII_ENDPOINT_URL,
+                phonebook_id=phonebook_id,
+            ),
+            data=payload,
+            files=files,
+        )
+        return response.json()

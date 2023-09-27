@@ -167,3 +167,21 @@ def mock_add_contacts(monkeypatch):
         return MockAddContactsResponse()
 
     monkeypatch.setattr(requests, "post", mock_post)
+
+
+class MockAddMultipleContactsResponse:
+    status_code = 200
+
+    @staticmethod
+    def json():
+        return {
+            "message": "Your list is being uploaded in the background."
+        }
+
+
+@pytest.fixture()
+def mock_add_multi_contacts(monkeypatch):
+    def mock_post(*args, **kwargs):
+        return MockAddMultipleContactsResponse()
+
+    monkeypatch.setattr(requests, "post", mock_post)
