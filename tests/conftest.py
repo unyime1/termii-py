@@ -174,9 +174,7 @@ class MockAddMultipleContactsResponse:
 
     @staticmethod
     def json():
-        return {
-            "message": "Your list is being uploaded in the background."
-        }
+        return {"message": "Your list is being uploaded in the background."}
 
 
 @pytest.fixture()
@@ -185,3 +183,19 @@ def mock_add_multi_contacts(monkeypatch):
         return MockAddMultipleContactsResponse()
 
     monkeypatch.setattr(requests, "post", mock_post)
+
+
+class MockDeleteContactResponse:
+    status_code = 200
+
+    @staticmethod
+    def json():
+        return {"message": "Contact deleted successfully"}
+
+
+@pytest.fixture()
+def mock_delete_contact(monkeypatch):
+    def mock_delete(*args, **kwargs):
+        return MockDeleteContactResponse()
+
+    monkeypatch.setattr(requests, "delete", mock_delete)

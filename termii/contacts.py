@@ -9,7 +9,11 @@ from termii.schemas.shared import (
     RequestType,
 )
 from termii.utils import make_request
-from termii.endpoints.contacts import FETCH_CONTACTS, ADD_CONTACT
+from termii.endpoints.contacts import (
+    FETCH_CONTACTS,
+    ADD_CONTACT,
+    DELETE_CONTACT,
+)
 
 
 class Contacts(Client):
@@ -22,7 +26,7 @@ class Contacts(Client):
             `page` (int): Page to return. Starts at 1.
 
             `phonebook_id` (str): ID of phonebook.
-        """
+        """  # noqa
 
         self.validate_authentication()
         data = RequestData(
@@ -65,7 +69,7 @@ class Contacts(Client):
             `last_name` (str | None): Last name of contact.
 
             `company` (str | None): Company of contact.
-        """
+        """  # noqa
 
         self.validate_authentication()
         payload = {}
@@ -114,7 +118,7 @@ class Contacts(Client):
 
             `file_path` (str): File containing the list of contacts you want to
                 add to your phonebook. Supported files include : 'txt', 'xlsx', and 'csv'.
-        """
+        """  # noqa
 
         self.validate_authentication()
         self.validate_contact_file(filename)
@@ -134,3 +138,23 @@ class Contacts(Client):
             files=files,
         )
         return response.json()
+
+    def delete_contact(self, contact_id: str) -> Dict:
+        """
+        Get all contacts on phonebook.
+        Docs: https://developers.termii.com/contacts#delete-phonebook
+
+        Args:
+            `contact_id` (str): ID of contact.
+        """  # noqa
+
+        self.validate_authentication()
+        data = RequestData(
+            url=DELETE_CONTACT.format(
+                TERMII_ENDPOINT_URL=self.TERMII_ENDPOINT_URL,
+                TERMII_API_KEY=self.TERMII_API_KEY,
+                contact_id=contact_id,
+            ),
+            type=RequestType.delete,
+        )
+        return make_request(data=data)

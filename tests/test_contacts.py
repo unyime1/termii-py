@@ -87,3 +87,11 @@ class TestContacts:
             )
             assert str(value_error.value) == "This file type is not supported."
         os.remove(file_name)
+
+    def test_delete_contact(self, test_environments, mock_delete_contact):
+        """Test delete contact"""
+        contact_client = Contacts()
+        contact_client.authenticate_from_env()
+        response = contact_client.delete_contact(contact_id=str(uuid.uuid4()))
+        print(response)
+        assert response["message"] == "Contact deleted successfully"
