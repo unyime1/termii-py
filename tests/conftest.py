@@ -7,7 +7,7 @@ from tests.test_data.sender_id import (
     request_payload as request_sender_id_payload,
 )
 from tests.test_data.messaging import data as messaging_response
-from tests.test_data.campaign import get_phonebook
+from tests.test_data.campaign import get_phonebook, get_contacts, add_contact
 from termii.utils import requests
 
 
@@ -133,5 +133,69 @@ class MockDeletePhonebookResponse:
 def mock_delete_phonebook(monkeypatch):
     def mock_delete(*args, **kwargs):
         return MockDeletePhonebookResponse()
+
+    monkeypatch.setattr(requests, "delete", mock_delete)
+
+
+class MockGetContactsResponse:
+    status_code = 200
+
+    @staticmethod
+    def json():
+        return get_contacts
+
+
+@pytest.fixture()
+def mock_get_contacts(monkeypatch):
+    def mock_get(*args, **kwargs):
+        return MockGetContactsResponse()
+
+    monkeypatch.setattr(requests, "get", mock_get)
+
+
+class MockAddContactsResponse:
+    status_code = 200
+
+    @staticmethod
+    def json():
+        return add_contact
+
+
+@pytest.fixture()
+def mock_add_contacts(monkeypatch):
+    def mock_post(*args, **kwargs):
+        return MockAddContactsResponse()
+
+    monkeypatch.setattr(requests, "post", mock_post)
+
+
+class MockAddMultipleContactsResponse:
+    status_code = 200
+
+    @staticmethod
+    def json():
+        return {"message": "Your list is being uploaded in the background."}
+
+
+@pytest.fixture()
+def mock_add_multi_contacts(monkeypatch):
+    def mock_post(*args, **kwargs):
+        return MockAddMultipleContactsResponse()
+
+    monkeypatch.setattr(requests, "post", mock_post)
+
+
+class MockDeleteContactResponse:
+    status_code = 200
+
+    @staticmethod
+    def json():
+        return {"message": "Contact deleted successfully"}
+
+
+@pytest.fixture()
+def mock_delete_contact(monkeypatch):
+    def mock_delete(*args, **kwargs):
+        return MockDeleteContactResponse()
 
     monkeypatch.setattr(requests, "delete", mock_delete)
