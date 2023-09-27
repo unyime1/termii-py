@@ -73,3 +73,86 @@ get_phonebook = {
         "total": 8,
     },
 }
+
+
+get_contacts = {
+    "data": [
+        {
+            "id": 3,
+            "pid": 4,
+            "phone_number": "2347062609181",
+            "email_address": None,
+            "message": None,
+            "company": None,
+            "first_name": None,
+            "last_name": None,
+            "create_at": "2021-06-30 12:02:15",
+            "updated_at": "2021-06-30 12:02:15"
+        },
+        {
+            "id": 4,
+            "pid": 4,
+            "phone_number": "2347051428948",
+            "email_address": None,
+            "message": None,
+            "company": None,
+            "first_name": None,
+            "last_name": None,
+            "create_at": "2021-06-30 12:02:20",
+            "updated_at": "2021-06-30 12:02:20"
+        },
+        {
+            "id": 5,
+            "pid": 4,
+            "phone_number": "2348173343852",
+            "email_address": None,
+            "message": None,
+            "company": None,
+            "first_name": None,
+            "last_name": None,
+            "create_at": "2021-06-30 12:02:20",
+            "updated_at": "2021-06-30 12:02:20"
+        },
+        {
+            "id": 6,
+            "pid": 4,
+            "phone_number": "2348057616056",
+            "email_address": None,
+            "message": None,
+            "company": None,
+            "first_name": None,
+            "last_name": None,
+            "create_at": "2021-06-30 12:02:20",
+            "updated_at": "2021-06-30 12:02:20"
+        },
+        {
+            "id": 7,
+            "pid": 4,
+            "phone_number": "2348060463787",
+            "email_address": None,
+            "message": None,
+            "company": None,
+            "first_name": None,
+            "last_name": None,
+            "create_at": "2021-06-30 12:02:20",
+            "updated_at": "2021-06-30 12:02:20"
+        }
+       
+    ],
+  
+    "links": {
+        "first": "https://api.ng.termii.com/api/phonebooks/04c3ebcc-3a7e-485a-88c1-68e731386f77/contacts?page=1",
+        "last": "https://api.ng.termii.com/api/phonebooks/04c3ebcc-3a7e-485a-88c1-68e731386f77/contacts?page=1",
+        "prev": None,
+        "next": None
+    },
+    "meta": {
+        "current_page": 1,
+        "from": 1,
+        "last_page": 1,
+        "path": "https://api.ng.termii.com/api/phonebooks/04c3ebcc-3a7e-485a-88c1-68e731386f77/contacts",
+        "per_page": 25,
+        "to": 22,
+        "total": 22
+    }
+}
