@@ -7,7 +7,7 @@ from tests.test_data.sender_id import (
     request_payload as request_sender_id_payload,
 )
 from tests.test_data.messaging import data as messaging_response
-from tests.test_data.campaign import get_phonebook, get_contacts
+from tests.test_data.campaign import get_phonebook, get_contacts, add_contact
 from termii.utils import requests
 
 
@@ -151,3 +151,19 @@ def mock_get_contacts(monkeypatch):
         return MockGetContactsResponse()
 
     monkeypatch.setattr(requests, "get", mock_get)
+
+
+class MockAddContactsResponse:
+    status_code = 200
+
+    @staticmethod
+    def json():
+        return add_contact
+
+
+@pytest.fixture()
+def mock_add_contacts(monkeypatch):
+    def mock_post(*args, **kwargs):
+        return MockAddContactsResponse()
+
+    monkeypatch.setattr(requests, "post", mock_post)

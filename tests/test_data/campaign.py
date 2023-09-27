@@ -87,7 +87,7 @@ get_contacts = {
             "first_name": None,
             "last_name": None,
             "create_at": "2021-06-30 12:02:15",
-            "updated_at": "2021-06-30 12:02:15"
+            "updated_at": "2021-06-30 12:02:15",
         },
         {
             "id": 4,
@@ -99,7 +99,7 @@ get_contacts = {
             "first_name": None,
             "last_name": None,
             "create_at": "2021-06-30 12:02:20",
-            "updated_at": "2021-06-30 12:02:20"
+            "updated_at": "2021-06-30 12:02:20",
         },
         {
             "id": 5,
@@ -111,7 +111,7 @@ get_contacts = {
             "first_name": None,
             "last_name": None,
             "create_at": "2021-06-30 12:02:20",
-            "updated_at": "2021-06-30 12:02:20"
+            "updated_at": "2021-06-30 12:02:20",
         },
         {
             "id": 6,
@@ -123,7 +123,7 @@ get_contacts = {
             "first_name": None,
             "last_name": None,
             "create_at": "2021-06-30 12:02:20",
-            "updated_at": "2021-06-30 12:02:20"
+            "updated_at": "2021-06-30 12:02:20",
         },
         {
             "id": 7,
@@ -135,16 +135,14 @@ get_contacts = {
             "first_name": None,
             "last_name": None,
             "create_at": "2021-06-30 12:02:20",
-            "updated_at": "2021-06-30 12:02:20"
-        }
-       
+            "updated_at": "2021-06-30 12:02:20",
+        },
     ],
-  
     "links": {
         "first": "https://api.ng.termii.com/api/phonebooks/04c3ebcc-3a7e-485a-88c1-68e731386f77/contacts?page=1",
         "last": "https://api.ng.termii.com/api/phonebooks/04c3ebcc-3a7e-485a-88c1-68e731386f77/contacts?page=1",
         "prev": None,
-        "next": None
+        "next": None,
     },
     "meta": {
         "current_page": 1,
@@ -153,6 +151,21 @@ get_contacts = {
         "path": "https://api.ng.termii.com/api/phonebooks/04c3ebcc-3a7e-485a-88c1-68e731386f77/contacts",
         "per_page": 25,
         "to": 22,
-        "total": 22
+        "total": 22,
+    },
+}
+
+
+add_contact = {
+    "data": {
+        "id": 3647982,
+        "phone_number": "2448123696237",
+        "email_address": "test@gmail.com",
+        "message": None,
+        "company": "Termii",
+        "first_name": "test",
+        "last_name": "contact",
+        "create_at": "2021-10-11 10:15:35",
+        "updated_at": "2021-10-11 10:15:35",
     }
 }
