@@ -4,13 +4,13 @@ build-backend = "hatchling.build"
 
 [project]
 name = "termii-py"
-version = "0.0.9"
+version = "0.0.10"
 authors = [
   { name="Unyime Etim", email="lordunyime@gmail.com" },
 ]
 description = "A beginner friendly SDK for Termii."
 readme = "README.md"
-requires-python = ">=3.7"
+requires-python = ">=3.8"
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
