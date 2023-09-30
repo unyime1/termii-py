@@ -51,3 +51,16 @@ class TestPhonebook:
         campaign_client.authenticate_from_env()
         data = campaign_client.delete_phonebook(phonebook_id=str(uuid.uuid4()))
         assert data.get("message") == "Phonebook deleted successfully"
+
+    def test_send_campaign(
+        self, test_environments, mock_send_campaign_contact
+    ):
+        """Test send campaign."""
+        campaign_client = Campaign()
+        campaign_client.authenticate_from_env()
+        data = campaign_client.send_campaign(
+            message="Test",
+            country_code="234",
+            phonebook_id=str(uuid.uuid4()),
+        )
+        assert data.get("message") == "Your campaign has been scheduled"

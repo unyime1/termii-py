@@ -199,3 +199,19 @@ def mock_delete_contact(monkeypatch):
         return MockDeleteContactResponse()
 
     monkeypatch.setattr(requests, "delete", mock_delete)
+
+
+class MockSendCampaignResponse:
+    status_code = 200
+
+    @staticmethod
+    def json():
+        return {"message": "Your campaign has been scheduled"}
+
+
+@pytest.fixture()
+def mock_send_campaign_contact(monkeypatch):
+    def mock_send_campaign(*args, **kwargs):
+        return MockSendCampaignResponse()
+
+    monkeypatch.setattr(requests, "post", mock_send_campaign)
