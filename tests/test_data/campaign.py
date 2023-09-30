@@ -313,3 +313,38 @@ fetch_campaigns = {
         "total": 11,
     },
 }
+
+
+fetch_campaign_history = {
+    "data": [
+        {
+            "id": 64,
+            "sender": "Termii",
+            "receiver": "2347089509657",
+            "message": "Hi This is from Termii Campaign",
+            "message_abbreviation": "Hi This is from Termii Campaign",
+            "amount": 1,
+            "channel": "Generic",
+            "sms_type": "plain",
+            "message_id": "0011551727393226622357573897694282599004522965786793671662369098835884420487860904021011663",
+            "status": "Sent",
+            "date_created": "2020-01-26 07:24:29",
+            "last_updated": "2020-01-26 07:24:29",
+        }
+    ],
+    "links": {
+        "first": "https://api.ng.termii.com/api/sms/campaigns/C5dbae7faa2b65?page=1",
+        "last": "https://api.ng.termii.com/api/sms/campaigns/C5dbae7faa2b65?page=1",
+        "prev": None,
+        "next": None,
+    },
+    "meta": {
+        "current_page": 1,
+        "from": 1,
+        "last_page": 1,
+        "path": "https://api.ng.termii.com/api/sms/campaigns/C5dbae7faa2b65",
+        "per_page": 15,
+        "to": 1,
+        "total": 1,
+    },
+}

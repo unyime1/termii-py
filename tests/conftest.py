@@ -12,6 +12,7 @@ from tests.test_data.campaign import (
     get_contacts,
     add_contact,
     fetch_campaigns,
+    fetch_campaign_history,
 )
 from termii.utils import requests
 
@@ -234,5 +235,21 @@ class MockFetchCampaignsResponse:
 def mock_fetch_campaigns(monkeypatch):
     def mock_fetch_campaign(*args, **kwargs):
         return MockFetchCampaignsResponse()
+
+    monkeypatch.setattr(requests, "get", mock_fetch_campaign)
+
+
+class MockFetchCampaignHistoryResponse:
+    status_code = 200
+
+    @staticmethod
+    def json():
+        return fetch_campaign_history
+
+
+@pytest.fixture()
+def mock_fetch_campaign_history(monkeypatch):
+    def mock_fetch_campaign(*args, **kwargs):
+        return MockFetchCampaignHistoryResponse()
 
     monkeypatch.setattr(requests, "get", mock_fetch_campaign)

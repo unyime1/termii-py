@@ -194,3 +194,28 @@ class Campaign(Client):
             type=RequestType.get,
         )
         return make_request(data=request_data)
+
+    def fetch_campaign_history(
+        self, campaign_id: str, page: Optional[int] = 1
+    ) -> Dict:
+        """
+        `Documentation`: https://developers.termii.com/campaign#fetch-campaign-history
+
+        Get single campaign history.
+
+        Args:
+            `page` (Optional[int]): Campaign page.
+        """  # noqa
+
+        # Data validation.
+        self.validate_authentication()
+        request_data = RequestData(
+            url=FETCH_CAMPAIGN_HISTORY.format(
+                TERMII_ENDPOINT_URL=self.TERMII_ENDPOINT_URL,
+                TERMII_API_KEY=self.TERMII_API_KEY,
+                page=page,
+                campaign_id=campaign_id,
+            ),
+            type=RequestType.get,
+        )
+        return make_request(data=request_data)
