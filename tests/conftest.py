@@ -7,7 +7,13 @@ from tests.test_data.sender_id import (
     request_payload as request_sender_id_payload,
 )
 from tests.test_data.messaging import data as messaging_response
-from tests.test_data.campaign import get_phonebook, get_contacts, add_contact
+from tests.test_data.campaign import (
+    get_phonebook,
+    get_contacts,
+    add_contact,
+    fetch_campaigns,
+    fetch_campaign_history,
+)
 from termii.utils import requests
 
 
@@ -199,3 +205,51 @@ def mock_delete_contact(monkeypatch):
         return MockDeleteContactResponse()
 
     monkeypatch.setattr(requests, "delete", mock_delete)
+
+
+class MockSendCampaignResponse:
+    status_code = 200
+
+    @staticmethod
+    def json():
+        return {"message": "Your campaign has been scheduled"}
+
+
+@pytest.fixture()
+def mock_send_campaign_contact(monkeypatch):
+    def mock_send_campaign(*args, **kwargs):
+        return MockSendCampaignResponse()
+
+    monkeypatch.setattr(requests, "post", mock_send_campaign)
+
+
+class MockFetchCampaignsResponse:
+    status_code = 200
+
+    @staticmethod
+    def json():
+        return fetch_campaigns
+
+
+@pytest.fixture()
+def mock_fetch_campaigns(monkeypatch):
+    def mock_fetch_campaign(*args, **kwargs):
+        return MockFetchCampaignsResponse()
+
+    monkeypatch.setattr(requests, "get", mock_fetch_campaign)
+
+
+class MockFetchCampaignHistoryResponse:
+    status_code = 200
+
+    @staticmethod
+    def json():
+        return fetch_campaign_history
+
+
+@pytest.fixture()
+def mock_fetch_campaign_history(monkeypatch):
+    def mock_fetch_campaign(*args, **kwargs):
+        return MockFetchCampaignHistoryResponse()
+
+    monkeypatch.setattr(requests, "get", mock_fetch_campaign)

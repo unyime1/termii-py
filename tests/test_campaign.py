@@ -1,7 +1,11 @@
 import uuid
 
 from termii.campaign import Campaign
-from tests.test_data.campaign import get_phonebook
+from tests.test_data.campaign import (
+    get_phonebook,
+    fetch_campaigns,
+    fetch_campaign_history,
+)
 
 
 class TestPhonebook:
@@ -51,3 +55,34 @@ class TestPhonebook:
         campaign_client.authenticate_from_env()
         data = campaign_client.delete_phonebook(phonebook_id=str(uuid.uuid4()))
         assert data.get("message") == "Phonebook deleted successfully"
+
+    def test_send_campaign(
+        self, test_environments, mock_send_campaign_contact
+    ):
+        """Test send campaign."""
+        campaign_client = Campaign()
+        campaign_client.authenticate_from_env()
+        data = campaign_client.send_campaign(
+            message="Test",
+            country_code="234",
+            phonebook_id=str(uuid.uuid4()),
+        )
+        assert data.get("message") == "Your campaign has been scheduled"
+
+    def test_fetch_campaigns(self, test_environments, mock_fetch_campaigns):
+        """Test send campaign."""
+        campaign_client = Campaign()
+        campaign_client.authenticate_from_env()
+        data = campaign_client.fetch_campaigns(page=1)
+        assert len(data.get("data")) == len(fetch_campaigns.get("data"))
+
+    def test_fetch_campaign_history(
+        self, test_environments, mock_fetch_campaign_history
+    ):
+        """Test fetch campaign histiry."""
+        campaign_client = Campaign()
+        campaign_client.authenticate_from_env()
+        data = campaign_client.fetch_campaign_history(
+            page=1, campaign_id=str(uuid.uuid4())
+        )
+        assert len(data.get("data")) == len(fetch_campaign_history.get("data"))
