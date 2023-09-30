@@ -7,7 +7,12 @@ from tests.test_data.sender_id import (
     request_payload as request_sender_id_payload,
 )
 from tests.test_data.messaging import data as messaging_response
-from tests.test_data.campaign import get_phonebook, get_contacts, add_contact
+from tests.test_data.campaign import (
+    get_phonebook,
+    get_contacts,
+    add_contact,
+    fetch_campaigns,
+)
 from termii.utils import requests
 
 
@@ -215,3 +220,19 @@ def mock_send_campaign_contact(monkeypatch):
         return MockSendCampaignResponse()
 
     monkeypatch.setattr(requests, "post", mock_send_campaign)
+
+
+class MockFetchCampaignsResponse:
+    status_code = 200
+
+    @staticmethod
+    def json():
+        return fetch_campaigns
+
+
+@pytest.fixture()
+def mock_fetch_campaigns(monkeypatch):
+    def mock_fetch_campaign(*args, **kwargs):
+        return MockFetchCampaignsResponse()
+
+    monkeypatch.setattr(requests, "get", mock_fetch_campaign)

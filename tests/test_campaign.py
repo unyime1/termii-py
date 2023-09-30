@@ -1,7 +1,7 @@
 import uuid
 
 from termii.campaign import Campaign
-from tests.test_data.campaign import get_phonebook
+from tests.test_data.campaign import get_phonebook, fetch_campaigns
 
 
 class TestPhonebook:
@@ -64,3 +64,10 @@ class TestPhonebook:
             phonebook_id=str(uuid.uuid4()),
         )
         assert data.get("message") == "Your campaign has been scheduled"
+
+    def test_fetch_campaigns(self, test_environments, mock_fetch_campaigns):
+        """Test send campaign."""
+        campaign_client = Campaign()
+        campaign_client.authenticate_from_env()
+        data = campaign_client.fetch_campaigns(page=1)
+        assert len(data.get("data")) == len(fetch_campaigns.get("data"))

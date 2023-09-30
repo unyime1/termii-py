@@ -172,3 +172,25 @@ class Campaign(Client):
             type=RequestType.post,
         )
         return make_request(data=request_data)
+
+    def fetch_campaigns(self, page: Optional[int] = 1) -> Dict:
+        """
+        `Documentation`: https://developers.termii.com/campaign#fetch-campaigns
+
+        Get all campaigns.
+
+        Args:
+            `page` (Optional[int]): Campaign page.
+        """  # noqa
+
+        # Data validation.
+        self.validate_authentication()
+        request_data = RequestData(
+            url=FETCH_CAMPAIGNS.format(
+                TERMII_ENDPOINT_URL=self.TERMII_ENDPOINT_URL,
+                TERMII_API_KEY=self.TERMII_API_KEY,
+                page=page,
+            ),
+            type=RequestType.get,
+        )
+        return make_request(data=request_data)
