@@ -39,6 +39,12 @@ class Token(Client):
         if pin_placeholder not in message_text:
             raise ValueError("Your pin_placeholder must be in message_text.")
 
+    def validate_numerical(self, code: int) -> None:
+        """Validate that code is an integer."""
+        print(isinstance(code, int))
+        if not isinstance(code, int):
+            raise ValueError("Code must be numerical.")
+
     def send_token(
         self,
         message_type: TokenType,
@@ -129,7 +135,7 @@ class Token(Client):
         one-time passwords (OTP) through the voice channel to a
         phone number. OTPs are generated and sent to the phone
         number and can only be verified using our Verify
-        Token API.
+        method.
 
         Args:
             `phone_number` (str): The destination phone number.
@@ -157,6 +163,42 @@ class Token(Client):
         payload["pin_attempts"] = pin_attempts
         payload["pin_time_to_live"] = pin_time_to_live
         payload["pin_length"] = pin_length
+
+        request_data = RequestData(
+            url=SEND_TOKEN.format(
+                TERMII_ENDPOINT_URL=self.TERMII_ENDPOINT_URL
+            ),
+            payload=payload,
+            type=RequestType.post,
+        )
+        return make_request(data=request_data)
+
+    def voice_call(self, phone_number: str, code: int) -> Dict:
+        """
+        The voice call API enables you to send messages
+        from your application through our voice channel
+        to a phone number. Only one-time-passwords (OTP)
+        are allowed for now and these OTPs can not be
+        verified using our Verify Token API.
+
+        Documentation: https://developers.termii.com/voice-call
+
+        Args:
+            `phone_number` (str): The destination phone number.
+            Phone number must be in the international
+            format (Example: 23490126727)
+
+            `code` (int): Example: 3344. The code you want
+            your users to receive. It has to be numeric
+            and length must be between 4 and 8 digits.
+        """
+        self.validate_pin_length(pin_length=len(str(code)))
+        self.validate_numerical(code=code)
+
+        payload = {}
+        payload["api_key"] = self.TERMII_API_KEY
+        payload["phone_number"] = phone_number
+        payload["code"] = code
 
         request_data = RequestData(
             url=SEND_TOKEN.format(

@@ -1,7 +1,7 @@
 import pytest
 
 from termii.token import Token
-from termii.utils import get_random_numbers
+from termii.utils import get_random_numbers, get_random_string
 from termii.schemas.token import TokenType
 from tests.test_data.token import send_token_response, voice_token_response
 
@@ -95,3 +95,29 @@ class TestSendVoiceToken:
             phone_number=get_random_numbers(count=10),
         )
         assert response.get("pinId") == voice_token_response.get("pinId")
+
+
+class TestVoiceCall:
+    def test_voice_call(
+        self, test_environments, mock_send_voice_token_response
+    ):
+        """Test voice call"""
+        token_client = Token()
+        token_client.authenticate_from_env()
+        response = token_client.voice_call(
+            phone_number=get_random_numbers(count=10), code=6534
+        )
+        assert response.get("pinId") == voice_token_response.get("pinId")
+
+    def test_voice_call_non_numerical(
+        self, test_environments, mock_send_voice_token_response
+    ):
+        """Test voice call"""
+        token_client = Token()
+        token_client.authenticate_from_env()
+        with pytest.raises(ValueError) as value_error:
+            token_client.voice_call(
+                phone_number=get_random_numbers(count=10),
+                code=get_random_string(4),
+            )
+        assert str(value_error.value) == "Code must be numerical."
