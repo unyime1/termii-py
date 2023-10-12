@@ -13,3 +13,12 @@ voice_token_response = {
     "balance": 77.5,
     "user": "Termii Test",
 }
+
+
+email_token_response = {
+    "code": "ok",
+    "message_id": "9122821270554876574",
+    "message": "Successfully Sent",
+    "balance": 9,
+    "user": "Shola Olu",
+}

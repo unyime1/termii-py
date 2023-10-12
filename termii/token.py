@@ -1,5 +1,7 @@
 from typing import Optional, Dict
 
+from pydantic import EmailStr
+
 from termii.auth import Client
 from termii.schemas.shared import (
     RequestData,
@@ -199,6 +201,48 @@ class Token(Client):
         payload["api_key"] = self.TERMII_API_KEY
         payload["phone_number"] = phone_number
         payload["code"] = code
+
+        request_data = RequestData(
+            url=SEND_TOKEN.format(
+                TERMII_ENDPOINT_URL=self.TERMII_ENDPOINT_URL
+            ),
+            payload=payload,
+            type=RequestType.post,
+        )
+        return make_request(data=request_data)
+
+    def email_token(
+        self, email: EmailStr, code: str, email_configuration_id: str
+    ) -> Dict:
+        """
+        The email token API enables you to send one-time-passwords
+        from your application through our email channel
+        to an email address. Only one-time-passwords (OTP)
+        are allowed for now and these OTPs can not be
+        verified using our Verify Token API.
+
+        Documentation: https://developers.termii.com/email-token
+
+        Args:
+            `email` (str): Represents the email address
+            you are sending to (Example: test@termii.com).
+
+            `code` (str): Represents the OTP sent to the
+            email address.
+
+            `email_configuration_id` (str): This is represents
+            the email configuration you have added on
+            your Termii dashboard. It can be found
+            on your Termii dashboard.
+        """
+
+        self.validate_pin_length(pin_length=len(str(code)))
+
+        payload = {}
+        payload["api_key"] = self.TERMII_API_KEY
+        payload["email"] = email
+        payload["code"] = code
+        payload["email_configuration_id"] = email_configuration_id
 
         request_data = RequestData(
             url=SEND_TOKEN.format(

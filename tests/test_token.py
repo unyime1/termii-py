@@ -3,7 +3,11 @@ import pytest
 from termii.token import Token
 from termii.utils import get_random_numbers, get_random_string
 from termii.schemas.token import TokenType
-from tests.test_data.token import send_token_response, voice_token_response
+from tests.test_data.token import (
+    send_token_response,
+    voice_token_response,
+    email_token_response,
+)
 
 
 class TestSendToken:
@@ -121,3 +125,18 @@ class TestVoiceCall:
                 code=get_random_string(4),
             )
         assert str(value_error.value) == "Code must be numerical."
+
+
+class TestEmailToken:
+    def test_email_token(self, test_environments, mock_email_token_response):
+        """Test voice call"""
+        token_client = Token()
+        token_client.authenticate_from_env()
+        response = token_client.email_token(
+            email="test@termii.com",
+            code=get_random_string(4),
+            email_configuration_id=get_random_string(26),
+        )
+        assert response.get("message_id") == email_token_response.get(
+            "message_id"
+        )

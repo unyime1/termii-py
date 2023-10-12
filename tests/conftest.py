@@ -15,7 +15,11 @@ from tests.test_data.campaign import (
     fetch_campaign_history,
 )
 from termii.utils import requests
-from tests.test_data.token import send_token_response, voice_token_response
+from tests.test_data.token import (
+    send_token_response,
+    voice_token_response,
+    email_token_response,
+)
 
 
 @pytest.fixture()
@@ -286,3 +290,19 @@ def mock_send_voice_token_response(monkeypatch):
         return MockSendVoiceTokenResponse()
 
     monkeypatch.setattr(requests, "post", mock_voice_send_token)
+
+
+class MockEmailTokenResponse:
+    status_code = 200
+
+    @staticmethod
+    def json():
+        return email_token_response
+
+
+@pytest.fixture()
+def mock_email_token_response(monkeypatch):
+    def mock_email_token(*args, **kwargs):
+        return MockEmailTokenResponse()
+
+    monkeypatch.setattr(requests, "post", mock_email_token)
