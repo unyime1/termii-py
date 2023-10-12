@@ -14,13 +14,13 @@ class Token(Client):
     """
     Base class for token APIs.
 
-    Documentation: https://developer.termii.com/send-token
+    Documentation: https://developer.termii.com/token
     """
 
     def validate_pin_attempts(self, attempts: int) -> None:
         """Validate pin attempts."""
         if attempts < 1:
-            raise ValueError("Pin attempts must be more than 1.")
+            raise ValueError("Pin attempts must be atleast 1.")
 
     def validate_pin_time_to_live(self, pin_time_to_live: int) -> None:
         """Validate pin time to live."""
@@ -30,14 +30,14 @@ class Token(Client):
     def validate_pin_length(self, pin_length: int) -> None:
         """Validate how long a pin should be."""
         if pin_length < 4 or pin_length > 8:
-            raise ValueError("pin_length must be between 5 and 8.")
+            raise ValueError("pin_length must be between 4 and 8.")
 
     def validate_message_text(
         self, pin_placeholder: str, message_text: str
     ) -> None:
         """Validate entered message."""
         if pin_placeholder not in message_text:
-            raise ValueError("Your pin_placeholder must be in message_text")
+            raise ValueError("Your pin_placeholder must be in message_text.")
 
     def send_token(
         self,
