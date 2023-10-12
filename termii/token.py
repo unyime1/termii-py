@@ -116,3 +116,53 @@ class Token(Client):
             type=RequestType.post,
         )
         return make_request(data=request_data)
+
+    def send_voice_token(
+        self,
+        phone_number: str,
+        pin_attempts: Optional[int] = 1,
+        pin_time_to_live: Optional[int] = 15,
+        pin_length: Optional[int] = 4,
+    ) -> Dict:
+        """
+        The voice token API enables you to generate and trigger
+        one-time passwords (OTP) through the voice channel to a
+        phone number. OTPs are generated and sent to the phone
+        number and can only be verified using our Verify
+        Token API.
+
+        Args:
+            `phone_number` (str): The destination phone number.
+            Phone number must be in the international
+            format (Example: 23490126727)
+
+            `pin_attempts` (int): Represents the number of times the PIN
+            can be attempted before expiration. It has a minimum of
+            one attempt.
+
+            `pin_time_to_live` (int): Represents how long the PIN is
+            valid before expiration. The time is in minutes.
+            The minimum time value is 0 and the maximum time value is 60
+
+            `pin_length` (int): The length of the PIN code. It has a
+            minimum of 4 and maximum of 8.
+        """
+        self.validate_pin_attempts(attempts=pin_attempts)
+        self.validate_pin_time_to_live(pin_time_to_live=pin_time_to_live)
+        self.validate_pin_length(pin_length=pin_length)
+
+        payload = {}
+        payload["api_key"] = self.TERMII_API_KEY
+        payload["phone_number"] = phone_number
+        payload["pin_attempts"] = pin_attempts
+        payload["pin_time_to_live"] = pin_time_to_live
+        payload["pin_length"] = pin_length
+
+        request_data = RequestData(
+            url=SEND_TOKEN.format(
+                TERMII_ENDPOINT_URL=self.TERMII_ENDPOINT_URL
+            ),
+            payload=payload,
+            type=RequestType.post,
+        )
+        return make_request(data=request_data)

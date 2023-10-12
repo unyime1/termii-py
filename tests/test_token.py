@@ -3,7 +3,7 @@ import pytest
 from termii.token import Token
 from termii.utils import get_random_numbers
 from termii.schemas.token import TokenType
-from tests.test_data.token import send_token_response
+from tests.test_data.token import send_token_response, voice_token_response
 
 
 class TestSendToken:
@@ -82,3 +82,16 @@ class TestSendToken:
             str(value_error.value)
             == "Your pin_placeholder must be in message_text."
         )
+
+
+class TestSendVoiceToken:
+    def test_send_voice_token(
+        self, test_environments, mock_send_voice_token_response
+    ):
+        """Test send token"""
+        token_client = Token()
+        token_client.authenticate_from_env()
+        response = token_client.send_voice_token(
+            phone_number=get_random_numbers(count=10),
+        )
+        assert response.get("pinId") == voice_token_response.get("pinId")
