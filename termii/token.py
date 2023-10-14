@@ -13,6 +13,7 @@ from termii.endpoints.token import (
     SEND_EMAIL_TOKEN,
     SEND_VOICE_TOKEN,
     VERIFY_TOKEN,
+    IN_APP_TOKEN,
 )
 from termii.schemas.token import TokenType, MessagingChannel
 
@@ -284,6 +285,61 @@ class Token(Client):
 
         request_data = RequestData(
             url=VERIFY_TOKEN.format(
+                TERMII_ENDPOINT_URL=self.TERMII_ENDPOINT_URL
+            ),
+            payload=payload,
+            type=RequestType.post,
+        )
+        return make_request(data=request_data)
+
+    def in_app_token(
+        self,
+        pin_type: TokenType,
+        phone_number: str,
+        pin_attempts: Optional[int] = 1,
+        pin_time_to_live: Optional[int] = 15,
+        pin_length: Optional[int] = 4,
+    ) -> Dict:
+        """
+        The send token API allows businesses trigger one-time-passwords (OTP)
+        across any available messaging channel on Termii. One-time-passwords
+        created are generated randomly and there's an option to set an expiry
+        time.
+
+        Args:
+            `pin_type` (TokenType): Type of pin code that will be generated
+            and sent as part of the OTP message.
+
+            `phone_number` (str): Represents the destination phone number.
+            Phone number must be in the international format
+            (Example: 23490126727)
+
+            `pin_attempts` (int): Represents the number of times the PIN
+            can be attempted before expiration. It has a minimum of
+            one attempt.
+
+            `pin_time_to_live` (int): Represents how long the PIN is
+            valid before expiration. The time is in minutes.
+            The minimum time value is 0 and the maximum time value is 60
+
+            `pin_length` (int): The length of the PIN code. It has a
+            minimum of 4 and maximum of 8.
+        """
+        self.validate_authentication()
+        self.validate_pin_attempts(attempts=pin_attempts)
+        self.validate_pin_time_to_live(pin_time_to_live=pin_time_to_live)
+        self.validate_pin_length(pin_length=pin_length)
+
+        payload = {}
+        payload["api_key"] = self.TERMII_API_KEY
+        payload["pin_attempts"] = pin_attempts
+        payload["pin_time_to_live"] = pin_time_to_live
+        payload["pin_length"] = pin_length
+        payload["pin_type"] = pin_type.value
+        payload["phone_number"] = phone_number
+
+        request_data = RequestData(
+            url=IN_APP_TOKEN.format(
                 TERMII_ENDPOINT_URL=self.TERMII_ENDPOINT_URL
             ),
             payload=payload,

@@ -29,3 +29,14 @@ verify_token = {
     "verified": "True",
     "msisdn": "2348109077743",
 }
+
+
+in_app_token_response = {
+    "status": "success",
+    "data": {
+        "pin_id": "db34d5ce-9bd4-4f10-b8ec-8ee402ccd0",
+        "otp": "522726",
+        "phone_number": "2348109077743",
+        "phone_number_other": "Termii",
+    },
+}

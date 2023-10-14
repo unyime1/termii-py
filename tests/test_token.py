@@ -10,6 +10,7 @@ from tests.test_data.token import (
     voice_token_response,
     email_token_response,
     verify_token,
+    in_app_token_response,
 )
 
 
@@ -154,3 +155,17 @@ class TestVerifyToken:
             pin_id=str(uuid.uuid4()), pin=get_random_numbers(6)
         )
         assert response.get("pinId") == verify_token.get("pinId")
+
+
+class TestGetInAppToken:
+    def test_get_in_app_token(
+        self, test_environments, mock_in_app_token_response
+    ):
+        """Test send token"""
+        token_client = Token()
+        token_client.authenticate_from_env()
+        response = token_client.in_app_token(
+            pin_type=TokenType.ALPHANUMERIC,
+            phone_number=get_random_numbers(count=10),
+        )
+        assert response.get("status") == in_app_token_response.get("status")
