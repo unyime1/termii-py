@@ -1,7 +1,17 @@
 import os
+import re
 
 
 class Client:
+    def validate_endpoint_url(self, termii_endpoint_url: str) -> None:
+        """Validate that endpoint url is correct."""
+        REGEX = r"\/$"
+        match = re.search(REGEX, termii_endpoint_url)
+        if match:
+            raise ValueError(
+                "TERMII_ENDPOINT_URL should not have a trailing /."
+            )
+
     def authenticate_from_env(self) -> None:
         """
         Authenticate requests using variables in the environment.
@@ -31,6 +41,7 @@ class Client:
             raise ValueError(
                 "TERMII_SENDER_ID is not present in the environment."
             )
+        self.validate_endpoint_url(self.TERMII_ENDPOINT_URL)
 
     def authenticate_direct(
         self, api_key: str, endpoint_url: str, sender_id: str
@@ -48,6 +59,7 @@ class Client:
         self.TERMII_API_KEY = api_key
         self.TERMII_ENDPOINT_URL = endpoint_url
         self.TERMII_SENDER_ID = sender_id
+        self.validate_endpoint_url(self.TERMII_ENDPOINT_URL)
 
     def validate_authentication(self) -> None:
         """
