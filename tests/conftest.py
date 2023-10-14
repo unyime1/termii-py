@@ -15,6 +15,13 @@ from tests.test_data.campaign import (
     fetch_campaign_history,
 )
 from termii.utils import requests
+from tests.test_data.token import (
+    send_token_response,
+    voice_token_response,
+    email_token_response,
+    verify_token,
+    in_app_token_response,
+)
 
 
 @pytest.fixture()
@@ -253,3 +260,83 @@ def mock_fetch_campaign_history(monkeypatch):
         return MockFetchCampaignHistoryResponse()
 
     monkeypatch.setattr(requests, "get", mock_fetch_campaign)
+
+
+class MockSendTokenResponse:
+    status_code = 200
+
+    @staticmethod
+    def json():
+        return send_token_response
+
+
+@pytest.fixture()
+def mock_send_token_response(monkeypatch):
+    def mock_send_token(*args, **kwargs):
+        return MockSendTokenResponse()
+
+    monkeypatch.setattr(requests, "post", mock_send_token)
+
+
+class MockSendVoiceTokenResponse:
+    status_code = 200
+
+    @staticmethod
+    def json():
+        return voice_token_response
+
+
+@pytest.fixture()
+def mock_send_voice_token_response(monkeypatch):
+    def mock_voice_send_token(*args, **kwargs):
+        return MockSendVoiceTokenResponse()
+
+    monkeypatch.setattr(requests, "post", mock_voice_send_token)
+
+
+class MockEmailTokenResponse:
+    status_code = 200
+
+    @staticmethod
+    def json():
+        return email_token_response
+
+
+@pytest.fixture()
+def mock_email_token_response(monkeypatch):
+    def mock_email_token(*args, **kwargs):
+        return MockEmailTokenResponse()
+
+    monkeypatch.setattr(requests, "post", mock_email_token)
+
+
+class MockVerifyTokenResponse:
+    status_code = 200
+
+    @staticmethod
+    def json():
+        return verify_token
+
+
+@pytest.fixture()
+def mock_verify_token_response(monkeypatch):
+    def mock_verify_token(*args, **kwargs):
+        return MockVerifyTokenResponse()
+
+    monkeypatch.setattr(requests, "post", mock_verify_token)
+
+
+class MockInAppTokenResponse:
+    status_code = 200
+
+    @staticmethod
+    def json():
+        return in_app_token_response
+
+
+@pytest.fixture()
+def mock_in_app_token_response(monkeypatch):
+    def mock_token(*args, **kwargs):
+        return MockInAppTokenResponse()
+
+    monkeypatch.setattr(requests, "post", mock_token)

@@ -37,7 +37,6 @@ class Messaging(Client):
             Dict.
         """
         self.validate_authentication()
-
         # Prepare request.
         data = RequestData(
             url=FETCH_SENDER_ID.format(
