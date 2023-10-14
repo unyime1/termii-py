@@ -22,3 +22,10 @@ email_token_response = {
     "balance": 9,
     "user": "Shola Olu",
 }
+
+
+verify_token = {
+    "pinId": "c8dcd048-5e7f-4347-8c89-4470c3af0b",
+    "verified": "True",
+    "msisdn": "2348109077743",
+}

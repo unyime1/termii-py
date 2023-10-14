@@ -19,6 +19,7 @@ from tests.test_data.token import (
     send_token_response,
     voice_token_response,
     email_token_response,
+    verify_token,
 )
 
 
@@ -306,3 +307,19 @@ def mock_email_token_response(monkeypatch):
         return MockEmailTokenResponse()
 
     monkeypatch.setattr(requests, "post", mock_email_token)
+
+
+class MockVerifyTokenResponse:
+    status_code = 200
+
+    @staticmethod
+    def json():
+        return verify_token
+
+
+@pytest.fixture()
+def mock_verify_token_response(monkeypatch):
+    def mock_verify_token(*args, **kwargs):
+        return MockVerifyTokenResponse()
+
+    monkeypatch.setattr(requests, "post", mock_verify_token)

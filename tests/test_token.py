@@ -1,3 +1,5 @@
+import uuid
+
 import pytest
 
 from termii.token import Token
@@ -7,6 +9,7 @@ from tests.test_data.token import (
     send_token_response,
     voice_token_response,
     email_token_response,
+    verify_token,
 )
 
 
@@ -140,3 +143,14 @@ class TestEmailToken:
         assert response.get("message_id") == email_token_response.get(
             "message_id"
         )
+
+
+class TestVerifyToken:
+    def test_email_token(self, test_environments, mock_verify_token_response):
+        """Test voice call"""
+        token_client = Token()
+        token_client.authenticate_from_env()
+        response = token_client.verify_token(
+            pin_id=str(uuid.uuid4()), pin=get_random_numbers(6)
+        )
+        assert response.get("pinId") == verify_token.get("pinId")

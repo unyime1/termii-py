@@ -8,7 +8,12 @@ from termii.schemas.shared import (
     RequestType,
 )
 from termii.utils import make_request
-from termii.endpoints.token import SEND_TOKEN
+from termii.endpoints.token import (
+    SEND_TOKEN,
+    SEND_EMAIL_TOKEN,
+    SEND_VOICE_TOKEN,
+    VERIFY_TOKEN,
+)
 from termii.schemas.token import TokenType, MessagingChannel
 
 
@@ -96,6 +101,7 @@ class Token(Client):
             `message_text` (str): Text of a message that would be sent
             to the destination phone number. Example: "Your pin is < 1234 >"
         """
+        self.validate_authentication()
         self.validate_pin_attempts(attempts=pin_attempts)
         self.validate_pin_time_to_live(pin_time_to_live=pin_time_to_live)
         self.validate_pin_length(pin_length=pin_length)
@@ -167,7 +173,7 @@ class Token(Client):
         payload["pin_length"] = pin_length
 
         request_data = RequestData(
-            url=SEND_TOKEN.format(
+            url=SEND_VOICE_TOKEN.format(
                 TERMII_ENDPOINT_URL=self.TERMII_ENDPOINT_URL
             ),
             payload=payload,
@@ -194,6 +200,7 @@ class Token(Client):
             your users to receive. It has to be numeric
             and length must be between 4 and 8 digits.
         """
+        self.validate_authentication()
         self.validate_pin_length(pin_length=len(str(code)))
         self.validate_numerical(code=code)
 
@@ -235,7 +242,7 @@ class Token(Client):
             your Termii dashboard. It can be found
             on your Termii dashboard.
         """
-
+        self.validate_authentication()
         self.validate_pin_length(pin_length=len(str(code)))
 
         payload = {}
@@ -245,7 +252,38 @@ class Token(Client):
         payload["email_configuration_id"] = email_configuration_id
 
         request_data = RequestData(
-            url=SEND_TOKEN.format(
+            url=SEND_EMAIL_TOKEN.format(
+                TERMII_ENDPOINT_URL=self.TERMII_ENDPOINT_URL
+            ),
+            payload=payload,
+            type=RequestType.post,
+        )
+        return make_request(data=request_data)
+
+    def verify_token(self, pin_id: str, pin: str) -> Dict:
+        """
+        Verify token API, checks tokens sent to customers and
+        returns a response confirming the status of the token.
+        A token can either be confirmed as verified or expired
+        based on the timer set for the token.
+
+        Documentation: https://developers.termii.com/verify-token
+
+        Args:
+            `pin_id` (str): ID of the PIN sent
+                (Example: "c8dcd048-5e7f-4347-8c89-4470c3af0b")
+
+            `pin` (str): The PIN code (Example: "195558").
+        """
+        self.validate_authentication()
+
+        payload = {}
+        payload["api_key"] = self.TERMII_API_KEY
+        payload["pin_id"] = pin_id
+        payload["pin"] = pin
+
+        request_data = RequestData(
+            url=VERIFY_TOKEN.format(
                 TERMII_ENDPOINT_URL=self.TERMII_ENDPOINT_URL
             ),
             payload=payload,
