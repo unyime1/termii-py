@@ -73,7 +73,8 @@ campaign_client.authenticate_from_env()
 
 For guidance on setting up a development environment and how to make a
 contribution to termii-py, see
-[Contributing to Termii-py](https://docs.pydantic.dev/contributing/).
+[Contributing to Termii-py](CONTRIBUTING.md).
+
 
 ## Reporting a Security Vulnerability
 
