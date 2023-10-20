@@ -1,3 +1,5 @@
+import re
+
 from typing import Dict, Optional
 from datetime import datetime
 
@@ -24,6 +26,14 @@ class Campaign(Client):
     """
     Handle operations related to phonebook.
     """
+
+    def validate_phonebook_name(self, name: str):
+        """Validate that phonebook name contains only letters and numbers."""
+        pattern = "^[a-zA-Z0-9]+$"
+        if not re.match(pattern, name):
+            raise ValueError(
+                "Phonebook name must contain only letters and numbers."
+            )
 
     def get_phonebooks(self, page: Optional[int] = 1) -> Dict:
         """
@@ -54,6 +64,8 @@ class Campaign(Client):
             `description` (str): A description of the contacts stored in the phonebook.
         """  # noqa
         self.validate_authentication()
+        self.validate_phonebook_name(name)
+
         payload = dict(
             api_key=self.TERMII_API_KEY,
             phonebook_name=name,
@@ -82,6 +94,8 @@ class Campaign(Client):
             `phonebook_id` (str): ID of phonebook to update.
         """  # noqa
         self.validate_authentication()
+        self.validate_phonebook_name(name)
+
         payload = dict(
             api_key=self.TERMII_API_KEY,
             phonebook_name=name,

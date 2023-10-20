@@ -137,7 +137,7 @@ class TestEmailToken:
         token_client = Token()
         token_client.authenticate_from_env()
         response = token_client.email_token(
-            email="test@termii.com",
+            email_address="test@termii.com",
             code=get_random_string(4),
             email_configuration_id=get_random_string(26),
         )
@@ -147,7 +147,7 @@ class TestEmailToken:
 
 
 class TestVerifyToken:
-    def test_email_token(self, test_environments, mock_verify_token_response):
+    def test_verify_token(self, test_environments, mock_verify_token_response):
         """Test voice call"""
         token_client = Token()
         token_client.authenticate_from_env()

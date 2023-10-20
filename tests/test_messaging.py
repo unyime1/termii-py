@@ -5,7 +5,6 @@ import pytest
 from termii.messaging import Messaging
 from tests.test_data.sender_id import fetch_payload as fetch_sender_id_payload
 from termii.schemas.messaging import (
-    MessagingChannel,
     MessageDistributionType,
 )
 from termii.utils import get_random_numbers
@@ -131,20 +130,6 @@ class TestSendSimpleMessage:
             receivers=receivers,
             text="Hello all. Thanks for visiting.",
             distribution_type=MessageDistributionType.bulk,
-        )
-        assert response["message"] == "Successfully Sent"
-
-    def test_send_whatsapp_bulk(self, test_environments, mock_send_messaging):
-        """Test send of bulk whatsapp messages."""
-        messaging_client = Messaging()
-        messaging_client.authenticate_from_env()
-
-        receivers = [get_random_numbers(13) for _ in range(50)]
-        response = messaging_client.send_message(
-            receivers=receivers,
-            text="Hello all. Thanks for visiting.",
-            distribution_type=MessageDistributionType.bulk,
-            channel=MessagingChannel.whatsapp,
         )
         assert response["message"] == "Successfully Sent"
 

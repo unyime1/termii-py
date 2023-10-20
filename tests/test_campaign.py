@@ -34,7 +34,7 @@ class TestPhonebook:
         campaign_client = Campaign()
         campaign_client.authenticate_from_env()
         response = campaign_client.create_phonebook(
-            name="Test phonebook", description="Test description."
+            name="Test", description="Test description."
         )
         response.get("message") == "Phonebook added successfully"
 
@@ -43,7 +43,7 @@ class TestPhonebook:
         campaign_client = Campaign()
         campaign_client.authenticate_from_env()
         response = campaign_client.update_phonebook(
-            name="Test phonebook",
+            name="Test2",
             description="Test description.",
             phonebook_id=str(uuid.uuid4()),
         )
