@@ -1,6 +1,6 @@
 # Termii-py
 
-Super easy SDK for Termii SMS APIs.
+Super easy SDK for [Termii](https://termii.com/) SMS APIs.
 
 ## Installation
 
