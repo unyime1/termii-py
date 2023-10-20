@@ -168,12 +168,17 @@ class Messaging(Client):
 
         # Make request.
         request_url = ""
-        if distribution_type.value == MessageDistributionType.simple:
-            request_url = SEND_MESSAGE.format(
-                TERMII_ENDPOINT_URL=self.TERMII_ENDPOINT_URL
-            )
+        if channel != MessagingChannel.whatsapp:
+            if distribution_type.value == MessageDistributionType.simple:
+                request_url = SEND_MESSAGE.format(
+                    TERMII_ENDPOINT_URL=self.TERMII_ENDPOINT_URL
+                )
+            else:
+                request_url = SEND_BULK_MESSAGE.format(
+                    TERMII_ENDPOINT_URL=self.TERMII_ENDPOINT_URL
+                )
         else:
-            request_url = SEND_BULK_MESSAGE.format(
+            request_url = SEND_MESSAGE.format(
                 TERMII_ENDPOINT_URL=self.TERMII_ENDPOINT_URL
             )
 

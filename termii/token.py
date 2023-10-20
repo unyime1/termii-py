@@ -220,7 +220,7 @@ class Token(Client):
         return make_request(data=request_data)
 
     def email_token(
-        self, email: EmailStr, code: str, email_configuration_id: str
+        self, email_address: EmailStr, code: str, email_configuration_id: str
     ) -> Dict:
         """
         The email token API enables you to send one-time-passwords
@@ -232,7 +232,7 @@ class Token(Client):
         Documentation: https://developers.termii.com/email-token
 
         Args:
-            `email` (str): Represents the email address
+            `email_address` (str): Represents the email address
             you are sending to (Example: test@termii.com).
 
             `code` (str): Represents the OTP sent to the
@@ -248,7 +248,7 @@ class Token(Client):
 
         payload = {}
         payload["api_key"] = self.TERMII_API_KEY
-        payload["email"] = email
+        payload["email_address"] = email_address
         payload["code"] = code
         payload["email_configuration_id"] = email_configuration_id
 
