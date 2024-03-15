@@ -17,6 +17,11 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 
+
+[tool.hatch.build.targets.wheel]
+packages = ["termii"]
+
+
 dependencies = [
   "requests>=2.23.0,<=2.32.0",
   "pydantic>=1.10.4,<=2.7.0"
