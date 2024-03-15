@@ -77,5 +77,4 @@ contribution to termii-py, see
 
 
 ## Reporting a Security Vulnerability
-
-Please send a private mail to `lordunyime@gmail.com` if you discover any security vulnerability. I'll be happy to work with you on a fix.
+Security vulnerabilities are a serious concern. If you discover a potential security issue, please do not create a public issue report. Instead, use the confidential reporting feature provided by GitHub, ensuring the details remain private until a fix is released. You can find instructions on privately reporting vulnerabilities here: [Privately reporting a security vulnerability](https://docs.github.com/en/code-security/security-advisories/guidance-on-reporting-and-writing-information-about-vulnerabilities/privately-reporting-a-security-vulnerability)
