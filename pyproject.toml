@@ -24,7 +24,7 @@ packages = ["termii"]
 
 dependencies = [
   "requests>=2.23.0,<=2.32.0",
-  "pydantic>=1.10.4,<=2.7.0"
+  "pydantic>=1.10.4,<=2.8.0"
 ]
 
 [project.urls]
