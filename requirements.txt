@@ -2,8 +2,8 @@
 -e .
 
 # Core lib
-requests>=2.23.0,<=2.31.0
-pydantic>=1.10.4,<=2.4.2
+requests>=2.23.0,<=2.33.0
+pydantic>=1.10.4,<=2.10.0
 
 
 # Build
